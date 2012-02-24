@@ -1,0 +1,8 @@
+To enable add filesplus to /etc/nsswitch.conf.  Only add it after
+the files option that's already there.  For example:
+
+passwd: file filesplus
+
+This library only supports passwd, shadow, and group.  The default
+location for the extra files is /etc/filesplus.  This can be changed
+using the /etc/nss-filesplus.cfg file.
