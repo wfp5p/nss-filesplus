@@ -2,7 +2,6 @@
 
 static struct fpent_t fspwent = {
 	.maptype   = FP_SHADOW,
-        .parser    = spw_parser
 };
 
 static inline int cmpname(void *d1, void *d2)
@@ -28,21 +27,46 @@ enum nss_status _nss_filesplus_endspent(void)
 	return internal_endent(&fspwent);
 }
 
-
-enum nss_status _nss_filesplus_getspent_r(struct spwd *spw, char *buffer,
-					  size_t buflen, int *errnop)
+static enum nss_status internal_getspent(struct spwd *spw, char *buffer,
+					 size_t buflen, int *errnop,
+					 void *cmpdata,
+					 int (*cmpFunc)(void *, void *))
 {
+	struct spwd *spwp;
+	int r = 0;
 	enum nss_status result = NSS_STATUS_SUCCESS;
 
-	NSS_DEBUG("filesplus: %s\n",__func__);
-
-	if (fspwent.stream == NULL)
+	if ( (fspwent.stream == NULL) || (cmpdata != NULL) )
 		result = internal_setent(&fspwent);
 
 	if (result != NSS_STATUS_SUCCESS)
 		return result;
 
-	return internal_getent_r((void *) spw, &fspwent, buffer, buflen,
+	while (!r) {
+		r = fgetspent_r(fspwent.stream, spw, buffer, buflen, &spwp);
+
+		if ( (cmpFunc == NULL) ||
+		     (cmpFunc(spw, cmpdata)))
+			break;
+	}
+
+
+	if (r == ERANGE) {
+		*errnop = ERANGE;
+		result = NSS_STATUS_TRYAGAIN;
+	} else if (r) {
+		result = NSS_STATUS_NOTFOUND;
+	}
+
+	return result;
+}
+
+enum nss_status _nss_filesplus_getspent_r(struct spwd *spw, char *buffer,
+					  size_t buflen, int *errnop)
+{
+	NSS_DEBUG("filesplus: %s\n",__func__);
+
+	return internal_getspent(spw, buffer, buflen,
 				 errnop, NULL, NULL);
 }
 
@@ -51,19 +75,10 @@ enum nss_status _nss_filesplus_getspnam_r(const char *name, struct spwd *spw,
 					  char *buffer, size_t buflen,
 					  int *errnop)
 {
-	enum nss_status result = NSS_STATUS_SUCCESS;
+	NSS_DEBUG("filesplus: %s\n",__func__);
 
-	NSS_DEBUG("filesplus: %s *%s*\n",__func__, name);
+	return internal_getspent(spw, buffer, buflen,
+				 errnop, (void *) name, cmpname);
 
-	result = internal_setent(&fspwent);
-
-	if (result != NSS_STATUS_SUCCESS)
-		return result;
-
-	result = internal_getent_r((void *) spw, &fspwent, buffer, buflen,
-				   errnop, (void *) name, cmpname);
-
-	NSS_DEBUG("filesplus: %s returning %i\n",__func__, result);
-	return result;
 }
 
