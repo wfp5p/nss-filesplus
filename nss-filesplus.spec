@@ -1,6 +1,6 @@
 Summary: glibc plugin to read additional local files
 Name: nss-filesplus
-Version: 0.3
+Version: 0.4
 Release: 1%{?dist}
 License: WTFPL
 
