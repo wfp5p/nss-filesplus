@@ -14,7 +14,7 @@
 #include <sys/types.h>
 
 #define MAX_LINE_SIZE 1024 /* max length of a line in config file */
-#define CONFIG_FILE "/etc/nss-filesplus.cfg"
+#define CONFIG_FILE "/etc/filesplus/nss-filesplus.cfg"
 
 #ifdef DEBUG
 #define NSS_DEBUG(msg, ...) syslog(LOG_DEBUG, (msg), ## __VA_ARGS__)
