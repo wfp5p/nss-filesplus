@@ -146,6 +146,9 @@ enum nss_status _nss_filesplus_initgroups_dyn(const char *user,
 			continue;
 		}
 
+		if (result != NSS_STATUS_SUCCESS)
+			continue;
+
 		if (gr.gr_gid == gid)
 			continue;
 
