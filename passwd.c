@@ -47,10 +47,11 @@ static enum nss_status internal_getpwent(struct passwd *pw, char *buffer,
 
 	if (r == ERANGE) {
 		*errnop = ERANGE;
-		result = NSS_STATUS_TRYAGAIN;
-	} else if (r) {
-		result = NSS_STATUS_NOTFOUND;
+		return NSS_STATUS_TRYAGAIN;
 	}
+
+	if (r)
+		return NSS_STATUS_NOTFOUND;
 
 	return result;
 }
