@@ -36,7 +36,7 @@ static enum nss_status internal_getspent(struct spwd *spw, char *buffer,
 	int r = 0;
 	enum nss_status result = NSS_STATUS_SUCCESS;
 
-	if ( (fspwent.stream == NULL) || (cmpdata != NULL) )
+	if ((fspwent.stream == NULL) || (cmpdata != NULL))
 		result = internal_setent(&fspwent);
 
 	if (result != NSS_STATUS_SUCCESS)

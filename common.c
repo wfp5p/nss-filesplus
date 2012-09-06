@@ -37,7 +37,6 @@ static int readconfig(void)
 	if (fh == NULL)
 		return 1;
 
-
 	if (regcomp(&re,"^(passwd|group|shadow):[[:space:]]+(.+)$",
 		    REG_EXTENDED|REG_NEWLINE)) {
 		NSS_DEBUG("filesplus: %s regcomp failed\n",__func__);

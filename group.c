@@ -130,7 +130,8 @@ enum nss_status _nss_filesplus_initgroups_dyn(const char *user,
 		result = internal_getgrent(&gr, buffer, buffer_size,
 					   errnop, NULL, NULL);
 
-		if ( (result == NSS_STATUS_TRYAGAIN) && ( *errnop == ERANGE) ) {
+		if ((result == NSS_STATUS_TRYAGAIN) &&
+		    ( *errnop == ERANGE)) {
 			char *new_buf;
 			buffer_size = 2 * buffer_size;
 			new_buf = (char *) realloc(buffer, buffer_size);

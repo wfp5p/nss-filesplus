@@ -30,7 +30,7 @@ static enum nss_status internal_getpwent(struct passwd *pw, char *buffer,
 	int r = 0;
 	enum nss_status result = NSS_STATUS_SUCCESS;
 
-	if ( (fpwent.stream == NULL) || (cmpdata != NULL) )
+	if ((fpwent.stream == NULL) || (cmpdata != NULL))
 		result = internal_setent(&fpwent);
 
 	if (result != NSS_STATUS_SUCCESS)
