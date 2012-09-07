@@ -138,7 +138,6 @@ enum nss_status _nss_filesplus_initgroups_dyn(const char *user,
 			new_buf = (char *) realloc(buffer, buffer_size);
 			if (new_buf == NULL) {
 				*errnop = errno;
-				free(buffer);
 				result = NSS_STATUS_UNAVAIL;
 				break;
 			}
