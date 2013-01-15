@@ -1,6 +1,6 @@
 Summary: glibc plugin to read additional local files
 Name: nss-filesplus
-Version: 0.4
+Version: 0.42
 Release: 1%{?dist}
 License: WTFPL
 
@@ -27,18 +27,13 @@ changed using the /etc/filesplus/nss-filesplus.cfg config file.
 make %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
 mkdir -m755 -p ${RPM_BUILD_ROOT}/%{_lib}
 install -m755 libnss_filesplus.so.2 ${RPM_BUILD_ROOT}/%{_lib}
 
 mkdir -m755 -p ${RPM_BUILD_ROOT}/etc/filesplus
 install -m644 nss-filesplus.cfg ${RPM_BUILD_ROOT}/etc/filesplus
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
-%post
-/sbin/ldconfig
+%post -p /sbin/ldconfig
 
 %postun -p /sbin/ldconfig
 
