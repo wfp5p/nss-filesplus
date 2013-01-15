@@ -70,8 +70,8 @@ void _nss_filesplus_init(void)
 	int x;
 
 	NSS_DEBUG("filesplus: %s\n",__func__);
-	if (_config.configed == 0)
-		readconfig();
+	/* if (_config.configed == 0) */
+	/* 	readconfig(); */
 
 	for (x = 0; x < 3; x++) {
 		if (_config.filename[x] == NULL)
