@@ -1,6 +1,6 @@
 Summary: glibc plugin to read additional local files
 Name: nss-filesplus
-Version: 0.42
+Version: 0.50
 Release: 1%{?dist}
 License: WTFPL
 
@@ -19,6 +19,8 @@ ones in /etc.
 
 The default location of these files is /etc/filesplus.  This can be
 changed using the /etc/filesplus/nss-filesplus.cfg config file.
+
+This version does NOT read /etc/filesplus/nss-filesplus.cfg.
 
 %prep
 %setup -q
