@@ -87,10 +87,12 @@ void _nss_filesplus_init(void)
 
 enum nss_status internal_setent(struct fpent_t *fpinfo)
 {
-	if (fpinfo->stream) {
-		rewind(fpinfo->stream);
-		return NSS_STATUS_SUCCESS;
-	}
+	internal_endent(fpinfo);
+
+	/* if (fpinfo->stream) { */
+	/* 	rewind(fpinfo->stream); */
+	/* 	return NSS_STATUS_SUCCESS; */
+	/* } */
 
 	if (_config.configed == 0)
 		_nss_filesplus_init();
