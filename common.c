@@ -65,7 +65,7 @@ static int readconfig(void)
 	return 0;
 }
 
-void _nss_filesplus_init(void)
+static void _nss_filesplus_init(void)
 {
 	int x;
 
