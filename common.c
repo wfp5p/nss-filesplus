@@ -43,7 +43,7 @@ static int readconfig(void)
 		return 1;
 	}
 
-	while (fgets(line, MAX_LINE_SIZE, fh) != 0) {
+	while (fgets(line, MAX_LINE_SIZE, fh) != NULL) {
 		x = regexec(&re, line, 3, re_match, 0);
 		if (x == 0) {
 			key = line;
